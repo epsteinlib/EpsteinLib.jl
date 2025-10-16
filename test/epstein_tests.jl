@@ -5,7 +5,6 @@ using SpecialFunctions
 
 @testset "Matches Riemann zeta at d=1" begin
     d = 1
-    # Test epsteinZeta(nu, 1)
     for nu = 2.0:0.5:5.0 
         @test epsteinZeta(nu, d) ≈ 2*zeta(nu) atol=1e-6
     end
@@ -15,17 +14,14 @@ end
     nu = 2.5
     x = [0.1, 0.2]
 
-    # Test epsteinZeta(nu, x)
     z1 = epsteinZeta(nu, x)
     @test isa(z1, Complex{Float64})    
 
-    # Compute expected result: uses identity matrix and zero y
     A = Matrix{Float64}(I, length(x), length(x))
     y = zeros(Float64, length(x))
     expected = epsteinZeta(nu, A, x, y)
     @test z1 == expected
 
-    # Test epsteinZeta(nu, d)
     d = 3
     z2 = epsteinZeta(nu, d)
     @test isa(z2, Complex{Float64})
