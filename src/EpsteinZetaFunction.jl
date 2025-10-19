@@ -2,7 +2,7 @@ module EpsteinZetaFunction
 
 using Epsteinlib_jll, LinearAlgebra
 
-export epsteinZeta
+export epsteinzeta
 
 """
 Calls the C function `epsteinZeta` from the shared library.
@@ -10,7 +10,7 @@ Calls the C function `epsteinZeta` from the shared library.
 Approximatess
 ``Z_{\\nu; A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
 """
-function epsteinZeta(
+function epsteinzeta(
     ν::Float64,
     A::Matrix{Float64},
     x::Vector{Float64},
@@ -30,21 +30,21 @@ end
 Approximates
 ``Z_{\nu, Id}(x, 0) = \\sum_{z \\in \\mathbb Z^d, z \\ne x} |x-z|^{-\\nu}``
 """
-function epsteinZeta(ν::Float64, x::Vector{Float64})::Complex{Float64}
+function epsteinzeta(ν::Float64, x::Vector{Float64})::Complex{Float64}
     A = Matrix{Float64}(I, length(x), length(x))
     y = zeros(Float64, length(x))
-    return epsteinZeta(ν, A, x, y)
+    return epsteinzeta(ν, A, x, y)
 end
 
 """
 Approximates
 ``Z_{\nu, Id}(0, 0) = \\sum_{z \\in \\mathbb Z^d, z \\ne 0} |z|^{-\\nu}``
 """
-function epsteinZeta(ν::Float64, d::Int64)::Complex{Float64}
+function epsteinzeta(ν::Float64, d::Int64)::Complex{Float64}
     x = zeros(Float64, d)
     A = Matrix{Float64}(I, d, d)
     y = zeros(Float64, d)
-    return epsteinZeta(ν, A, x, y)
+    return epsteinzeta(ν, A, x, y)
 end
 
 end # module
