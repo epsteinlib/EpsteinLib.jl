@@ -22,7 +22,7 @@ function epsteinzeta(
         dim::UInt32,
         A::Ref{Float64},
         x::Ref{Float64},
-        y::Ptr{Float64},
+        y::Ref{Float64},
     )::Complex{Float64}
 end
 
