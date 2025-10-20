@@ -8,7 +8,7 @@ export epsteinzeta
 Calls the C function `epsteinZeta` from the shared library.
     double complex epsteinZeta(double nu, unsigned int dim, const double *A, const double *x, const double *y);
 Approximatess
-``Z_{\\nu; A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
+``Z_{\\nu; A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{-e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
 """
 function epsteinzeta(
     ν::Float64,
