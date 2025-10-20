@@ -8,7 +8,8 @@ export epsteinzeta
 Calls the C function `epsteinZeta` from the shared library.
     double complex epsteinZeta(double nu, unsigned int dim, const double *A, const double *x, const double *y);
 Approximatess
-``Z_{\\nu; A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
+``Z_{\\nu; A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{-e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
+if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
 """
 function epsteinzeta(
     ν::Float64,
@@ -29,6 +30,7 @@ end
 """
 Approximates
 ``Z_{\nu, Id}(x, 0) = \\sum_{z \\in \\mathbb Z^d, z \\ne x} |x-z|^{-\\nu}``
+if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
 """
 function epsteinzeta(ν::Float64, x::Vector{Float64})::Complex{Float64}
     A = Matrix{Float64}(I, length(x), length(x))
@@ -39,6 +41,7 @@ end
 """
 Approximates
 ``Z_{\nu, Id}(0, 0) = \\sum_{z \\in \\mathbb Z^d, z \\ne 0} |z|^{-\\nu}``
+if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
 """
 function epsteinzeta(ν::Float64, d::Int64)::Complex{Float64}
     x = zeros(Float64, d)
