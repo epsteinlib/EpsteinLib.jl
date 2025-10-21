@@ -17,11 +17,12 @@ function epsteinzeta(
     x::Vector{Float64},
     y::Vector{Float64},
 )::Complex{Float64}
-    dim = Base.UInt32(size(A, 1))
+    dim = UInt32(size(A, 1))
+    A_flat = vec(permutedims(A))
     return @ccall libepstein.epsteinZeta(
         ν::Float64,
         dim::UInt32,
-        A::Ref{Float64},
+        A_flat::Ref{Float64},
         x::Ref{Float64},
         y::Ref{Float64},
     )::Complex{Float64}
