@@ -45,7 +45,7 @@ function epsteinzeta(
     x::Union{Vector{T1},Nothing} = nothing,
     y::Union{Vector{T2},Nothing} = nothing,
     A::Union{Matrix{T3},Nothing} = nothing,
-)::Complex{Float64} where {T0 <: Real, T1 <: Real, T2 <: Real, T3 <: Real}
+)::Complex{Float64} where {T0<:Real,T1<:Real,T2<:Real,T3<:Real}
     if x==nothing && y==nothing && d==nothing
         throw(ArgumentError("Either d, x, or y must be specified"))
     end
