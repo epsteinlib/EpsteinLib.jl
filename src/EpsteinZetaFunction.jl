@@ -40,12 +40,12 @@ if the real part of nu is greater than the system dimension, and the meromorphic
 
 """
 function epsteinzeta(
-    ν::Real;
+    ν::T0;
     d::Union{Integer,Nothing} = nothing,
-    x::Union{Vector{Real},Nothing} = nothing,
-    y::Union{Vector{Real},Nothing} = nothing,
-    A::Union{Matrix{Real},Nothing} = nothing,
-)::Complex{Float64}
+    x::Union{Vector{T1},Nothing} = nothing,
+    y::Union{Vector{T2},Nothing} = nothing,
+    A::Union{Matrix{T3},Nothing} = nothing,
+)::Complex{Float64} where {T0 <: Real, T1 <: Real, T2 <: Real, T3 <: Real}
     if x==nothing && y==nothing && d==nothing
         throw(ArgumentError("Either d, x, or y must be specified"))
     end
