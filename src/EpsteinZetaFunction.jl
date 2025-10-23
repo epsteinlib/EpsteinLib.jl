@@ -5,9 +5,10 @@ using Epsteinlib_jll, LinearAlgebra
 export epsteinzeta
 
 """
+    epsteinzeta(ν::Float64,A::Matrix{Float64},x::Vector{Float64},y::Vector{Float64})
 Calls the C function `epsteinZeta` from the shared library.
     double complex epsteinZeta(double nu, unsigned int dim, const double *A, const double *x, const double *y);
-Approximatess
+Approximates
 ``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{-e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
 if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
 """
@@ -29,25 +30,64 @@ function epsteinzeta(
 end
 
 """
-Approximates
-``Z_{\nu, \\mathbb Z^d}(x, 0) = \\sum_{z \\in \\mathbb Z^d, z \\ne x} |x-z|^{-\\nu}``
+
+    epsteinzeta(ν; d, x, y, A)
+where d, x, y, A are optional. x and y default to zero of size d, and A to the identity matrix of size d.  
+
+Approximatess
+``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{-e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
 if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
-"""
-function epsteinzeta(ν::Float64, x::Vector{Float64})::Complex{Float64}
-    A = Matrix{Float64}(I, length(x), length(x))
-    y = zeros(Float64, length(x))
-    return epsteinzeta(ν, A, x, y)
-end
 
 """
-Approximates
-``Z_{\nu, \\mathbb Z^d}(0, 0) = \\sum_{z \\in \\mathbb Z^d, z \\ne 0} |z|^{-\\nu}``
-if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
-"""
-function epsteinzeta(ν::Float64, d::Int64)::Complex{Float64}
-    x = zeros(Float64, d)
-    A = Matrix{Float64}(I, d, d)
-    y = zeros(Float64, d)
+function epsteinzeta(
+    ν::T0;
+    d::Union{Integer,Nothing} = nothing,
+    x::Union{Vector{T1},Nothing} = nothing,
+    y::Union{Vector{T2},Nothing} = nothing,
+    A::Union{Matrix{T3},Nothing} = nothing,
+)::Complex{Float64} where {T0<:Real,T1<:Real,T2<:Real,T3<:Real}
+    if x==nothing && y==nothing && d==nothing && A==nothing
+        throw(ArgumentError("Either d, x, y, or A must be specified"))
+    end
+    if d==nothing
+        if x!=nothing
+            d = length(x)
+        else
+            if y!=nothing
+                d = length(y)
+            else
+                d = size(A, 1)
+            end
+        end
+    end
+
+    if x == nothing
+        x = zeros(d)
+    else
+        if length(x)==d
+            x = convert(Vector{Float64}, x)
+        else
+            throw(ArgumentError("Incompatible size for x"))
+        end
+    end
+    if y == nothing
+        y = zeros(d)
+    else
+        if length(y)==d
+            y = convert(Vector{Float64}, y)
+        else
+            throw(ArgumentError("Incompatible size for y"))
+        end
+    end
+
+    if A == nothing
+        A = Matrix{Float64}(I, d, d)
+    elseif size(A) != (d, d)
+        throw(ArgumentError("Incompatible size of A"))
+    else
+        A = convert(Matrix{Float64}, A)
+    end
+
     return epsteinzeta(ν, A, x, y)
 end
 
