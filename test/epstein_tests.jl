@@ -17,6 +17,23 @@ using SpecialFunctions
     end
 end
 
+@testset "Matches 2D zeta values from C implementation" begin
+    ν = 1 / 2
+    d = 2
+    A = [1 1/2;
+         0 sqrt(3)/2]
+    x = [1/10, 2/10]
+    y = [3/10, 4/10]
+    @test epsteinzeta(ν; d = d) == -1.9216892211799304
+#    @test epsteinzeta(ν; A = A) == -1.9999940144822623 # todo, include only specify a in functionaliy and include all A cases below
+    @test epsteinzeta(ν; x = x) == 0.24057039785271267 + 1.039425935548863e-19im
+    @test epsteinzeta(ν; d = d, x = x) == 0.24057039785271267 + 1.039425935548863e-19im
+    @test epsteinzeta(ν; y = y) == -1.2108986338197985 + 2.435700050591742e-19im
+    @test epsteinzeta(ν; d = d, y = y) == -1.2108986338197985 + 2.435700050591742e-19im
+    @test epsteinzeta(ν; x = x, y = y) == 0.8830108146701363 - 0.09354849186479881im
+    @test epsteinzeta(ν; d = d, x = x, y = y) == 0.8830108146701363 - 0.09354849186479881im
+end
+
 @testset "Test errors" begin
     ν = 2.0
     @test_throws ArgumentError epsteinzeta(ν)
