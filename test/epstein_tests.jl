@@ -7,7 +7,7 @@ using SpecialFunctions
     d = 1
     for ν = 2.0:0.5:5.0
         ref = 2 * zeta(ν)
-        @test epsteinzeta(ν; d = 1) ≈ ref atol = 1e-6
+        @test epsteinzeta(ν; d = 1) ≈ ref atol = 1e-14
     end
 end
 
@@ -17,12 +17,13 @@ end
     A = [
         1 1/2;
         0 sqrt(3)/2
-    ]
+    ] # hexagonal lattice matrix
     x = [1/10, 2/10]
     y = [3/10, 4/10]
-    @test epsteinzeta(ν; d = d) ≈ -1.9216892211799304 atol = 1e-14
+    @test epsteinzeta(ν; d = d) ≈ -1.9216892211799304
     @test epsteinzeta(ν; A = A) ≈ -1.9999940144822623
     @test epsteinzeta(ν; x = x) ≈ 0.24057039785271267 + 1.039425935548863e-19im
+    @test epsteinzeta(ν; A = A, x = x) ≈ 0.24057039785271267 + 1.039425935548863e-19im
     @test epsteinzeta(ν; d = d, x = x) ≈ 0.24057039785271267 + 1.039425935548863e-19im
     @test epsteinzeta(ν; y = y) ≈ -1.2108986338197985 + 2.435700050591742e-19im
     @test epsteinzeta(ν; d = d, y = y) ≈ -1.2108986338197985 + 2.435700050591742e-19im
