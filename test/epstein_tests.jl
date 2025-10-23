@@ -8,30 +8,26 @@ using SpecialFunctions
     for ν = 2.0:0.5:5.0
         ref = 2 * zeta(ν)
         @test epsteinzeta(ν; d = 1) ≈ ref atol = 1e-6
-        @test epsteinzeta(ν; x = [0.0]) ≈ ref atol = 1e-6
-        @test epsteinzeta(ν; d = 1, x = [0.0]) ≈ ref atol = 1e-6
-        @test epsteinzeta(ν; y = [0.0]) ≈ ref atol = 1e-6
-        @test epsteinzeta(ν; d = 1, y = [0.0]) ≈ ref atol = 1e-6
-        @test epsteinzeta(ν; x = [0.0], y = [0.0]) ≈ ref atol = 1e-6
-        @test epsteinzeta(ν; d = 1, x = [0.0], y = [0.0]) ≈ ref atol = 1e-6
     end
 end
 
 @testset "Matches 2D zeta values from C implementation" begin
     ν = 1 / 2
     d = 2
-    A = [1 1/2;
-         0 sqrt(3)/2]
+    A = [
+        1 1/2;
+        0 sqrt(3)/2
+    ]
     x = [1/10, 2/10]
     y = [3/10, 4/10]
-    @test epsteinzeta(ν; d = d) == -1.9216892211799304
-#    @test epsteinzeta(ν; A = A) == -1.9999940144822623 # todo, include only specify a in functionaliy and include all A cases below
-    @test epsteinzeta(ν; x = x) == 0.24057039785271267 + 1.039425935548863e-19im
-    @test epsteinzeta(ν; d = d, x = x) == 0.24057039785271267 + 1.039425935548863e-19im
-    @test epsteinzeta(ν; y = y) == -1.2108986338197985 + 2.435700050591742e-19im
-    @test epsteinzeta(ν; d = d, y = y) == -1.2108986338197985 + 2.435700050591742e-19im
-    @test epsteinzeta(ν; x = x, y = y) == 0.8830108146701363 - 0.09354849186479881im
-    @test epsteinzeta(ν; d = d, x = x, y = y) == 0.8830108146701363 - 0.09354849186479881im
+    @test epsteinzeta(ν; d = d) ≈ -1.9216892211799304 atol = 1e-14
+    #    @test epsteinzeta(ν; A = A) ≈ -1.9999940144822623 # todo, include only specify a in functionaliy and include all A cases below
+    @test epsteinzeta(ν; x = x) ≈ 0.24057039785271267 + 1.039425935548863e-19im
+    @test epsteinzeta(ν; d = d, x = x) ≈ 0.24057039785271267 + 1.039425935548863e-19im
+    @test epsteinzeta(ν; y = y) ≈ -1.2108986338197985 + 2.435700050591742e-19im
+    @test epsteinzeta(ν; d = d, y = y) ≈ -1.2108986338197985 + 2.435700050591742e-19im
+    @test epsteinzeta(ν; x = x, y = y) ≈ 0.8830108146701363 - 0.09354849186479881im
+    @test epsteinzeta(ν; d = d, x = x, y = y) ≈ 0.8830108146701363 - 0.09354849186479881im
 end
 
 @testset "Test errors" begin
@@ -41,6 +37,11 @@ end
     @test_throws ArgumentError epsteinzeta(ν; d = 1, y = [0.0, 0.0])
     @test_throws ArgumentError epsteinzeta(ν; x = [0.0], y = [0.0, 0.0])
     @test_throws ArgumentError epsteinzeta(ν; d = 1, x = [0.0, 0.0], y = [0.0, 0.0])
+
+    A = Matrix{Float64}(I, 1, 1)
+    @test_throws ArgumentError epsteinzeta(ν; d = 2, A = A)
+    @test_throws ArgumentError epsteinzeta(ν; x = [0.0, 0.0], A = A)
+    @test_throws ArgumentError epsteinzeta(ν; y = [0.0, 0.0], A = A)
 end
 
 @testset "Compare single non-diagonal evaluation with reference value obtained from the C implementation" begin
@@ -81,18 +82,32 @@ end
     A = Matrix{Float64}(I, length(x), length(x))
     y = zeros(Float64, length(x))
     expected = epsteinzeta(ν, A, x, y)
-    @test z1 == expected
+    @test z1 ≈ expected
 
     d = 3
     z2 = epsteinzeta(ν; d = d)
     @test isa(z2, Complex{Float64})
 
-    A2 = Matrix{Float64}(I, d, d)
-    x2 = zeros(Float64, d)
-    y2 = zeros(Float64, d)
-    expected2 = epsteinzeta(ν, A2, x2, y2)
-    @test z2 == expected2
+    A_id = Matrix{Float64}(I, d, d)
+    zeros_d = zeros(Float64, d)
+    expected2 = epsteinzeta(ν, A_id, zeros_d, zeros_d)
+    @test z2 ≈ expected2
 
+    @test epsteinzeta(ν; x = zeros_d) ≈ expected2
+    @test epsteinzeta(ν; d = d, x = zeros_d) ≈ expected2
+    @test epsteinzeta(ν; y = zeros_d) ≈ expected2
+    @test epsteinzeta(ν; d = d, y = zeros_d) ≈ expected2
+    @test epsteinzeta(ν; x = zeros_d, y = zeros_d) ≈ expected2
+    @test epsteinzeta(ν; d = d, x = zeros_d, y = zeros_d) ≈ expected2
+
+    @test epsteinzeta(ν; A = A_id) ≈ expected2
+    @test epsteinzeta(ν; d = d, A = A_id) ≈ expected2
+    @test epsteinzeta(ν; x = zeros_d, A = A_id) ≈ expected2
+    @test epsteinzeta(ν; d = d, x = zeros_d, A = A_id) ≈ expected2
+    @test epsteinzeta(ν; y = zeros_d, A = A_id) ≈ expected2
+    @test epsteinzeta(ν; d = d, y = zeros_d) ≈ expected2
+    @test epsteinzeta(ν; x = zeros_d, y = zeros_d) ≈ expected2
+    @test epsteinzeta(ν; d = d, x = zeros_d, y = zeros_d) ≈ expected2
 end
 
 

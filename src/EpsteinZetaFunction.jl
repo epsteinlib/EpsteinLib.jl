@@ -46,40 +46,44 @@ function epsteinzeta(
     y::Union{Vector{T2},Nothing} = nothing,
     A::Union{Matrix{T3},Nothing} = nothing,
 )::Complex{Float64} where {T0<:Real,T1<:Real,T2<:Real,T3<:Real}
-    if x==nothing && y==nothing && d==nothing
-        throw(ArgumentError("Either d, x, or y must be specified"))
+    if x==nothing && y==nothing && d==nothing && A==nothing
+        throw(ArgumentError("Either d, x, y, or A must be specified"))
     end
     if d==nothing
-        if x==nothing
-            d = length(y)
-            x = zeros(d)
-        else
+        if x!=nothing
             d = length(x)
-            if y==nothing
-                y = zeros(d)
-            elseif length(y) != d
-                throw(ArgumentError("x and y must be the same length"))
+        else
+            if y!=nothing
+                d = length(y)
+            else
+                d = size(A, 1)
             end
         end
+    end
+
+    if x == nothing
+        x = zeros(d)
     else
-        if x == nothing
-            x = zeros(d)
-        elseif length(x) != d
-            throw(ArgumentError("x must be of length d"))
-        end
-        if y == nothing
-            y = zeros(d)
-        elseif length(y) != d
-            throw(ArgumentError("y must be of length d"))
+        if length(x)==d
+            x = convert(Vector{Float64}, x)
+        else
+            throw(ArgumentError("Incompatible size for x"))
         end
     end
-    x = convert(Vector{Float64}, x)
-    y = convert(Vector{Float64}, y)
+    if y == nothing
+        y = zeros(d)
+    else
+        if length(y)==d
+            y = convert(Vector{Float64}, y)
+        else
+            throw(ArgumentError("Incompatible size for y"))
+        end
+    end
 
     if A == nothing
         A = Matrix{Float64}(I, d, d)
     elseif size(A) != (d, d)
-        throw(ArgumentError("Dimensions mismatch at A"))
+        throw(ArgumentError("Incompatible size of A"))
     else
         A = convert(Matrix{Float64}, A)
     end
