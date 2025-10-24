@@ -18,7 +18,7 @@ epsteinzeta(ν::Float64, A::Matrix{Float64}, x::Vector{Float64}, y::Vector{Float
 ```
 and with optional keyword arguments as
 ```julia
-    epsteinzeta(ν; d, x, y, A)
+epsteinzeta(ν; d, x, y, A)
 ```
 where `d, x, y, A` are optional. `x` and `y` default to zero of size `d`, and `A` to the identity matrix of size `d`.  It performs some initial checks. 
 
