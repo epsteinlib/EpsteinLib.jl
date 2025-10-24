@@ -29,7 +29,7 @@ function epsteinzeta(
     )::Complex{Float64}
 end
 
-function cleanuparguments(ν, A, x, y)
+function cleanuparguments(d, ν, A, x, y)
     ν = convert(Float64, ν)
     if x==nothing && y==nothing && d==nothing && A==nothing
         throw(ArgumentError("Either d, x, y, or A must be specified"))
@@ -94,7 +94,7 @@ function epsteinzeta(
     y::Union{Vector{T2},Nothing} = nothing,
     A::Union{Matrix{T3},Nothing} = nothing,
 )::Complex{Float64} where {T0<:Real,T1<:Real,T2<:Real,T3<:Real}
-    ν, A, x, y = cleanuparguments(ν, A, x, y)
+    ν, A, x, y = cleanuparguments(d, ν, A, x, y)
 
     return epsteinzeta(ν, A, x, y)
 end
@@ -137,7 +137,7 @@ function epsteinzetareg(
     y::Union{Vector{T2},Nothing} = nothing,
     A::Union{Matrix{T3},Nothing} = nothing,
 )::Complex{Float64} where {T0<:Real,T1<:Real,T2<:Real,T3<:Real}
-    ν, A, x, y = cleanuparguments(ν, A, x, y)
+    ν, A, x, y = cleanuparguments(d, ν, A, x, y)
 
     return epsteinzetareg(ν, A, x, y)
 end
