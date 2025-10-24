@@ -7,7 +7,7 @@ This is a julia interface for [https://github.com/epsteinlib/epsteinlib](https:/
 The Epstein zeta function is defined by
 
 ```math
-Z_{\nu, A}(x, y) = \sum_{\substack{z \in A \mathbb{Z}^d \\ z \ne x}} \frac{-e^{2\pi i y \cdot z}}{|x-z|^\nu},
+Z_{\nu, A}(x, y) = \sum_{\substack{z \in A \mathbb{Z}^d \\ z \ne x}} \frac{e^{-2\pi i y \cdot z}}{|x-z|^\nu},
 ```
 
 if $\nu > d$, and the meromorphic continuation otherwise.
