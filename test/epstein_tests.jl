@@ -44,7 +44,7 @@ end
     @test_throws ArgumentError epsteinzeta(ν; y = [0.0, 0.0], A = A)
 end
 
-@testset "Compare single non-diagonal evaluation with reference value obtained from the C implementation" begin
+@testset "Test single Epstein zeta evaluation" begin
 
     nu = 1/2
     A = [
@@ -57,6 +57,22 @@ end
     ref = 0.8819439608604308 - 0.10322404491724824im
 
     @test epsteinzeta(nu, A, x, y) ≈ ref atol = 1e-16
+end
+
+
+@testset "Test single Epstein zeta reg evaluation" begin
+
+    nu = 1/2
+    A = [
+        1 1/2;
+        0 sqrt(3)/2
+    ]
+    x = [1/10, 2/10]
+    y = [3/10, 4/10]
+
+    ref = 0.1225562448097732 + 0.4826367446847953im
+
+    @test epsteinzetareg(nu, A, x, y) ≈ ref atol = 1e-16
 end
 
 
