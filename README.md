@@ -12,17 +12,22 @@ Z_{\nu, A}(x, y) = \sum_{\substack{z \in A \mathbb{Z}^d \\ z \ne x}} \frac{-e^{2
 
 if $\nu > d$, and the meromorphic continuation otherwise.
 
-It provides the convenient syntax
+The `C` library may be called directly using the syntax
+```julia
+epsteinzeta(ν::Float64, A::Matrix{Float64}, x::Vector{Float64}, y::Vector{Float64})::Complex{Float64}
+```
+and with optional keyword arguments as
 ```julia
     epsteinzeta(ν; d, x, y, A)
 ```
 where `d, x, y, A` are optional. `x` and `y` default to zero of size `d`, and `A` to the identity matrix of size `d`.  It performs some initial checks. 
-The `C` library may be called directly using the syntax
+
+
+The regularized Epstein zeta function is implemented in this library as
 ```julia
-    epsteinzeta(
-        ν::Float64,
-        A::Matrix{Float64},
-        x::Vector{Float64},
-        y::Vector{Float64},
-    )::Complex{Float64}
+epsteinzetareg(ν::Float64, A::Matrix{Float64}, x::Vector{Float64}, y::Vector{Float64})::Complex{Float64}
+```
+and with optional keyword arguments as
+```julia
+epsteinzetareg(ν; d, x, y, A)
 ```
