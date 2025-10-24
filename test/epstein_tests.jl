@@ -126,4 +126,13 @@ end
     @test epsteinzeta(ν; d = d, x = zeros_d, y = zeros_d) ≈ expected2
 end
 
+@testset "General Real types work" begin
+    ν = 2.0
+    ref = epsteinzeta(ν; d = 3)
+
+    @test epsteinzeta(2; d = Int32(3)) ≈ ref
+    @test epsteinzeta(2; x = [0, 0, 0]) ≈ ref
+    @test epsteinzeta(2; y = [0, 0, 0]) ≈ ref
+    @test epsteinzeta(2; A = [1 0 0; 0 1 0; 0 0 1]) ≈ ref
+end
 
