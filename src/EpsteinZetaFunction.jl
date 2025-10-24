@@ -9,7 +9,7 @@ export epsteinzeta, epsteinzetareg
 Calls the C function `epsteinZeta` from the shared library.
     double complex epsteinZeta(double nu, unsigned int dim, const double *A, const double *x, const double *y);
 Approximates
-``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{-e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
+``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{e^{-2\\pi i y \\cdot z}}{|x-z|^\\nu}``
 if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
 """
 function epsteinzeta(
@@ -83,7 +83,7 @@ end
 where d, x, y, A are optional. x and y default to zero of size d, and A to the identity matrix of size d.  
 
 Approximatess
-``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{-e^{2\\pi i y \\cdot z}}{|x-z|^\\nu}``
+``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \frac{e^{-2\\pi i y \\cdot z}}{|x-z|^\\nu}``
 if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
 
 """
@@ -123,12 +123,9 @@ function epsteinzetareg(
 end
 
 """
-
     epsteinzetareg(ν; d, x, y, A)
 where d, x, y, A are optional. x and y default to zero of size d, and A to the identity matrix of size d.  
-
 Calculates a regularization of the Epstein zeta function in the second vector argument.
-
 """
 function epsteinzetareg(
     ν::T0;
