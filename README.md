@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/dgomezcastro/EpsteinZetaFunction.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/dgomezcastro/EpsteinZetaFunction.jl/actions/workflows/ci.yml)
 
-This is a julia interface for [https://github.com/epsteinlib/epsteinlib](https://github.com/epsteinlib/epsteinlib) by Andreas A. Buchheit, Jonathan Busse, Ruben Gutendorf.
+This is a julia interface for [https://github.com/epsteinlib/epsteinlib](https://github.com/epsteinlib/epsteinlib) by Andreas A. Buchheit, Jonathan Busse, Ruben Gutendorf. Compiled binaries are available through [Epstein_lib.jll](https://github.com/JuliaBinaryWrappers/Epsteinlib_jll.jl).
 
 The Epstein zeta function is defined by
 
