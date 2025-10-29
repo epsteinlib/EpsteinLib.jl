@@ -1,4 +1,4 @@
-module EpsteinZetaFunction
+module EpsteinLib
 
 using Epsteinlib_jll, LinearAlgebra
 

@@ -1,6 +1,5 @@
 using Test
 using LinearAlgebra
-using EpsteinZetaFunction
 using SpecialFunctions
 
 @testset "Matches Riemann zeta at d=1" begin
@@ -23,11 +22,15 @@ end
     @test epsteinzeta(ν; d = d) ≈ -1.9216892211799304 atol = 1e-14
     @test epsteinzeta(ν; A = A) ≈ -1.9999940144822623 atol = 1e-14
     @test epsteinzeta(ν; x = x) ≈ 0.24057039785271267 + 1.039425935548863e-19im atol = 1e-14
-    @test epsteinzeta(ν; d = d, A = A, x = x) ≈ 0.1719186692933788 + 8.347631999046855e-22im atol = 1e-14
+    @test epsteinzeta(ν; d = d, A = A, x = x) ≈ 0.1719186692933788 + 8.347631999046855e-22im atol =
+        1e-14
     @test epsteinzeta(ν; y = y) ≈ -1.2108986338197985 + 2.435700050591742e-19im atol = 1e-14
-    @test epsteinzeta(ν; A = A, y = y) ≈ -1.1985660480329243 + 1.1405461005324793e-19im atol = 1e-14
-    @test epsteinzeta(ν; x = x, y = y) ≈ 0.8830108146701363 - 0.09354849186479881im atol = 1e-14
-    @test epsteinzeta(ν; d = d, A = A, x = x, y = y) ≈ 0.8819439608604308 - 0.10322404491724824im atol = 1e-14
+    @test epsteinzeta(ν; A = A, y = y) ≈ -1.1985660480329243 + 1.1405461005324793e-19im atol =
+        1e-14
+    @test epsteinzeta(ν; x = x, y = y) ≈ 0.8830108146701363 - 0.09354849186479881im atol =
+        1e-14
+    @test epsteinzeta(ν; d = d, A = A, x = x, y = y) ≈
+          0.8819439608604308 - 0.10322404491724824im atol = 1e-14
 end
 
 @testset "Test errors" begin
