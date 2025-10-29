@@ -1,4 +1,4 @@
-# `EpsteinZetaFunction.jl`
+# `EpsteinLib.jl`
 
 [![CI](https://github.com/dgomezcastro/EpsteinZetaFunction.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/dgomezcastro/EpsteinZetaFunction.jl/actions/workflows/ci.yml)
 
