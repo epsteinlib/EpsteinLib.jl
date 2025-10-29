@@ -1,4 +1,4 @@
 using Test
-using EpsteinZetaFunction
+using EpsteinLib
 
 include("epstein_tests.jl")
