@@ -5,18 +5,16 @@ version = "0.1.0"
 
 [deps]
 Epsteinlib_jll = "4ec54591-1743-56ec-8704-f258a6d96b61"
-JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
-Libdl = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
 [compat]
 Epsteinlib_jll = ">=0.1.0"
-SpecialFunctions = ">=2.5"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
+JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
 
 [targets]
-test = ["Test"]
+test = ["Test", "SpecialFunctions", "JuliaFormatter"]
 
