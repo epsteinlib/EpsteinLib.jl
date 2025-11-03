@@ -4,7 +4,7 @@ authors = [
     "David Gomez-Castro <david@gomezcastro.xyz>",
     "Jonathan K. Busse <jonathan@jbusse.de>"
 ]
-version = "0.1.0"
+version = "0.5.0"
 license = "AGPL-3.0-only"
 
 [deps]
@@ -12,7 +12,7 @@ Epsteinlib_jll = "4ec54591-1743-56ec-8704-f258a6d96b61"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [compat]
-Epsteinlib_jll = ">=0.1.0"
+Epsteinlib_jll = "0.5.0"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
