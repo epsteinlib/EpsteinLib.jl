@@ -55,8 +55,7 @@ Defaults for `x`, `y`, and `A` are identical to those used in `epsteinzeta`.
 The library can be installed via
 
 ```julia
-using Pkg
-Pkg.add("EpsteinLib")
+using Pkg; Pkg.add(url="https://github.com/epsteinlib/EpsteinLib.jl")
 ```
 
 The following example then computes the Madelung constant to machine precision 
