@@ -1,0 +1,5 @@
+repos:
+# ... other repos you may have
+- repo: "https://github.com/domluna/JuliaFormatter.jl"
+  hooks:
+  - id: "julia-formatter"
