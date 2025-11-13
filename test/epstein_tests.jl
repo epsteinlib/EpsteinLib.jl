@@ -138,4 +138,3 @@ end
     @test epsteinzeta(2; y = [0, 0, 0]) ≈ ref
     @test epsteinzeta(2; A = [1 0 0; 0 1 0; 0 0 1]) ≈ ref
 end
-
