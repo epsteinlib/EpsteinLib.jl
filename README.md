@@ -85,3 +85,10 @@ println("Reference value:\t\t", madelung_ref)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please use [pre-commit](https://pre-commit.com) to ensure your commits are well-formatted by running 
+```sh
+pip install pre-commit
+pre-commit install
+```
+when you clone the repo.
