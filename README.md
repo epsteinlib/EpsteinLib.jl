@@ -35,10 +35,10 @@ $$
 Z_{\Lambda,\nu}^{\mathrm{reg}}\begin{vmatrix} \boldsymbol x \newline\boldsymbol y \end{vmatrix} =
 e^{2\pi i \boldsymbol x\cdot\boldsymbol y}
 Z_{\Lambda,\nu}\left|\begin{aligned} \boldsymbol x \newline\boldsymbol y \end{aligned}\right|
--\frac{\hat{s}(\boldsymbol y)}{V_{\Lambda}},
+-\frac{\hat{s}_{\nu}(\boldsymbol y)}{V_{\Lambda}},
 $$
 
-where $V_{\Lambda}=|\det A|$ is the volume of the elementary lattice cell, and the singularity $\hat{s}_\nu(\boldsymbol \cdot)$ is defined as in [epsteinlib](https://github.com/epsteinlib/epsteinlib).
+where $V_{\Lambda}=|\det A|$ is the volume of the elementary lattice cell, and the Fourier transform of the singularity $s_{\nu}=|\boldsymbol{\cdot}|^{-\nu}$ is defined as in [epsteinlib](https://github.com/epsteinlib/epsteinlib).
 
 The regularized Epstein zeta function is implemented as
 ```julia
