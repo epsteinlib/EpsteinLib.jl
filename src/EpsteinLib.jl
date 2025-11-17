@@ -1,5 +1,5 @@
 module EpsteinLib
-       
+
 using Epsteinlib_jll, LinearAlgebra
 
 export epsteinzeta, epsteinzetareg
@@ -31,14 +31,14 @@ end
 
 function cleanuparguments(d, ν, A, x, y)
     ν = convert(Float64, ν)
-    if x==nothing && y==nothing && d==nothing && A==nothing
+    if x == nothing && y == nothing && d == nothing && A == nothing
         throw(ArgumentError("Either d, x, y, or A must be specified"))
     end
-    if d==nothing
-        if x!=nothing
+    if d == nothing
+        if x != nothing
             d = length(x)
         else
-            if y!=nothing
+            if y != nothing
                 d = length(y)
             else
                 d = size(A, 1)
@@ -50,7 +50,7 @@ function cleanuparguments(d, ν, A, x, y)
     if x == nothing
         x = zeros(d)
     else
-        if length(x)==d
+        if length(x) == d
             x = convert(Vector{Float64}, x)
         else
             throw(ArgumentError("Incompatible size for x"))
@@ -59,7 +59,7 @@ function cleanuparguments(d, ν, A, x, y)
     if y == nothing
         y = zeros(d)
     else
-        if length(y)==d
+        if length(y) == d
             y = convert(Vector{Float64}, y)
         else
             throw(ArgumentError("Incompatible size for y"))
