@@ -65,14 +65,14 @@ using EpsteinLib, Printf
 
 ν = 1.0
 dim = 3
-A = [1.0, 0.0, 0.0,
-     0.0, 1.0, 0.0,
-     0.0, 0.0, 1.0]
+A = [1.0 0.0 0.0;
+     0.0 1.0 0.0;
+     0.0 0.0 1.0]
 x = [0.0, 0.0, 0.0]
 y = [0.5, 0.5, 0.5]
 
 # Calculate Madelung constant
-madelung = epsteinzeta(ν, dim, A, x, y)
+madelung = epsteinzeta(ν, A, x, y)
 
 # Reference value and relative error
 madelung_ref = -1.7475645946331821906362120355443974
