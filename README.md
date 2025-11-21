@@ -64,7 +64,6 @@ The following example then computes the Madelung constant to machine precision
 using EpsteinLib, Printf
 
 ν = 1.0
-dim = 3
 A = [1.0 0.0 0.0;
      0.0 1.0 0.0;
      0.0 0.0 1.0]
