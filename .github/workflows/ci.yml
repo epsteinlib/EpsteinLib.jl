@@ -8,14 +8,25 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: Julia ${{ matrix.version }} - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - 'min'
+          - 'lts'
+          - '1'
+          - 'pre'
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Julia
-        uses: julia-actions/setup-julia@v1
+      - uses: actions/checkout@v6
+      - uses: julia-actions/setup-julia@v2
         with:
-          version: '1.9'
-      - name: Install dependencies
-        run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
-      - name: Run tests
-        run: julia --project=. -e 'using Pkg; Pkg.test()'
+          version: ${{ matrix.version }}
+      - uses: julia-actions/cache@v2
+      - uses: julia-actions/julia-buildpkg@v1
+      - uses: julia-actions/julia-runtest@v1
