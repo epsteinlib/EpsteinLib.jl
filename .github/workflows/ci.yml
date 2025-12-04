@@ -8,13 +8,27 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: Julia ${{ matrix.version }} - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - 'min'
+          - 'lts'
+          - '1'
+          - 'pre'
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - windows-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Julia
-        uses: julia-actions/setup-julia@v1
+      - name: Check Project.toml
+        run: cat Project.toml
+      - uses: julia-actions/setup-julia@v2
         with:
-          version: '1.9'
+          version: ${{ matrix.version }} 
       - name: Install dependencies
         run: julia --project=. -e 'using Pkg; Pkg.instantiate()'
       - name: Run tests
