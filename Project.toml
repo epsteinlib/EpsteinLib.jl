@@ -4,7 +4,7 @@ authors = [
     "David Gomez-Castro <david@gomezcastro.xyz>",
     "Jonathan K. Busse <jonathan@jbusse.de>"
 ]
-version = "0.5.0"
+version = "0.5.1"
 license = "AGPL-3.0-only"
 
 [deps]
