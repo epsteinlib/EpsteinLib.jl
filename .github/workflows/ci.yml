@@ -22,6 +22,9 @@ jobs:
           - ubuntu-latest
           - macOS-latest
           - windows-latest
+        exclude:
+          - os: macos-latest # Apple Silicon
+            version: 'min' # Old version of julia does not run on apple silicon
     steps:
       - uses: actions/checkout@v4
       - name: Check Project.toml
