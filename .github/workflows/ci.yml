@@ -25,6 +25,9 @@ jobs:
         exclude:
           - os: macos-latest # Apple Silicon
             version: 'min' # Old version of julia does not run on apple silicon
+        include:
+          - os: macos-13 # Intel
+            version: 'min'
     steps:
       - uses: actions/checkout@v4
       - name: Check Project.toml
