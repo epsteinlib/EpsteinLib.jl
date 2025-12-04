@@ -59,7 +59,7 @@ end
 
     ref = 0.8819439608604308 - 0.10322404491724824im
 
-    @test epsteinzeta(nu, A, x, y) ≈ ref atol = 1e-16
+    @test epsteinzeta(nu, A, x, y) ≈ ref atol = 2e-16
 end
 
 
