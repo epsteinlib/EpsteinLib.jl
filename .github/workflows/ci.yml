@@ -22,7 +22,7 @@ jobs:
           - macOS-latest
           - windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
       - name: Check Project.toml
         run: cat Project.toml
       - uses: julia-actions/setup-julia@v2
