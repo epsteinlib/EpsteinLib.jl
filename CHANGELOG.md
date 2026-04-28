@@ -1,9 +1,12 @@
 # Changelog
 
-## [0.5.1] - unreleased
+## [0.5.1] - 2026-04-27
+
+### Changed
+- Updated to Epsteinlib_jll `v0.5.1`, see [EpsteinLib changelog](https://github.com/epsteinlib/epsteinlib/blob/main/CHANGELOG.md) for details.
 
 ### Added
-- Standalone minimal example in `README.md` uses the registered wrapper, e.g. `Pkg.add("EpsteinLib")`
+- Standalone minimal example in `README.md` uses the registered wrapper, e.g. `Pkg.add("EpsteinLib")`.
 
 ## [0.5.0] - 2025-12-04
 
