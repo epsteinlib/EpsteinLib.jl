@@ -138,3 +138,45 @@ end
     @test epsteinzeta(2; y = [0, 0, 0]) ≈ ref
     @test epsteinzeta(2; A = [1 0 0; 0 1 0; 0 0 1]) ≈ ref
 end
+
+@testset "Test errors" begin
+    ν = 2.0
+    @test_throws ArgumentError epsteinzeta(ν)
+    @test_throws ArgumentError epsteinzeta(ν; d = 1, x = [0.0, 0.0])
+    @test_throws ArgumentError epsteinzeta(ν; d = 1, y = [0.0, 0.0])
+    @test_throws ArgumentError epsteinzeta(ν; x = [0.0], y = [0.0, 0.0])
+    @test_throws ArgumentError epsteinzeta(ν; d = 1, x = [0.0, 0.0], y = [0.0, 0.0])
+
+    A = Matrix{Float64}(I, 1, 1)
+    @test_throws ArgumentError epsteinzeta(ν; d = 2, A = A)
+    @test_throws ArgumentError epsteinzeta(ν; x = [0.0, 0.0], A = A)
+    @test_throws ArgumentError epsteinzeta(ν; y = [0.0, 0.0], A = A)
+end
+
+@testset "Low-level methods validate dimensions" begin
+    ν = 2.0
+    A3 = Matrix{Float64}(I, 3, 3)
+
+    # x or y shorter than dim — C would read past the end of the array
+    @test_throws ArgumentError epsteinzeta(ν, A3, zeros(2), zeros(3))
+    @test_throws ArgumentError epsteinzeta(ν, A3, zeros(3), zeros(2))
+    @test_throws ArgumentError epsteinzetareg(ν, A3, zeros(2), zeros(3))
+    @test_throws ArgumentError epsteinzetareg(ν, A3, zeros(3), zeros(2))
+
+    # x or y longer than dim — trailing entries silently ignored
+    @test_throws ArgumentError epsteinzeta(ν, A3, zeros(4), zeros(3))
+    @test_throws ArgumentError epsteinzeta(ν, A3, zeros(3), zeros(4))
+    @test_throws ArgumentError epsteinzetareg(ν, A3, zeros(4), zeros(3))
+
+    # non-square A — flattening produces a silently wrong matrix
+    Awide = Matrix{Float64}(I, 2, 3)
+    Atall = Matrix{Float64}(I, 3, 2)
+    @test_throws ArgumentError epsteinzeta(ν, Awide, zeros(2), zeros(2))
+    @test_throws ArgumentError epsteinzeta(ν, Atall, zeros(3), zeros(3))
+    @test_throws ArgumentError epsteinzetareg(ν, Awide, zeros(2), zeros(2))
+    @test_throws ArgumentError epsteinzetareg(ν, Atall, zeros(3), zeros(3))
+
+    # the guard must not reject valid input
+    @test epsteinzeta(ν, A3, zeros(3), zeros(3)) isa Complex{Float64}
+    @test epsteinzetareg(ν, A3, zeros(3), zeros(3)) isa Complex{Float64}
+end
