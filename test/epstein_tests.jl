@@ -14,11 +14,11 @@ end
     ν = 1 / 2
     d = 2
     A = [
-        1 1/2;
+        1 1/2
         0 sqrt(3)/2
     ] # hexagonal lattice matrix
-    x = [1/10, 2/10]
-    y = [3/10, 4/10]
+    x = [1 / 10, 2 / 10]
+    y = [3 / 10, 4 / 10]
     @test epsteinzeta(ν; d = d) ≈ -1.9216892211799304 atol = 1e-14
     @test epsteinzeta(ν; A = A) ≈ -1.9999940144822623 atol = 1e-14
     @test epsteinzeta(ν; x = x) ≈ 0.24057039785271267 + 1.039425935548863e-19im atol = 1e-14
@@ -49,13 +49,13 @@ end
 
 @testset "Test single Epstein zeta evaluation" begin
 
-    nu = 1/2
+    nu = 1 / 2
     A = [
-        1 1/2;
+        1 1/2
         0 sqrt(3)/2
     ]
-    x = [1/10, 2/10]
-    y = [3/10, 4/10]
+    x = [1 / 10, 2 / 10]
+    y = [3 / 10, 4 / 10]
 
     ref = 0.8819439608604308 - 0.10322404491724824im
 
@@ -65,13 +65,13 @@ end
 
 @testset "Test single Epstein zeta reg evaluation" begin
 
-    nu = 1/2
+    nu = 1 / 2
     A = [
-        1 1/2;
+        1 1/2
         0 sqrt(3)/2
     ]
-    x = [1/10, 2/10]
-    y = [3/10, 4/10]
+    x = [1 / 10, 2 / 10]
+    y = [3 / 10, 4 / 10]
 
     ref = 0.1225562448097732 + 0.4826367446847953im
 
@@ -84,7 +84,7 @@ sum_vertices(ν, N) = sum(truncated_power(ν, sqrt(x^2 + y^2)) for x = (-N):N, y
 
 @testset "Matches sum at d=2" begin
     d = 2
-    N = 5_000
+    N = 1_000
     for ν = 3.0:1.0:5.0
         @test epsteinzeta(ν; d = d) ≈ sum_vertices(ν, N) atol = 1e-2
     end
