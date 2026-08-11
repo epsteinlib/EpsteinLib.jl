@@ -34,7 +34,7 @@ $$
 Z_{\Lambda,\nu}^{\mathrm{reg}}(\boldsymbol x,\boldsymbol y) =
 e^{2\pi i \boldsymbol x\cdot\boldsymbol y}
 Z_{\Lambda,\nu}(\boldsymbol x,\boldsymbol y )
--\frac{\hat{s}(\boldsymbol y)}{V_{\Lambda}},
+-\frac{\hat{s}_{\nu}(\boldsymbol y)}{V_{\Lambda}},
 $$
 
 where $V_{\Lambda}=|\det A|$ is the volume of the elementary lattice cell, and the Fourier transform of the singularity $s_{\nu}=|\boldsymbol{\cdot}|^{-\nu}$ is defined as in [epsteinlib](https://github.com/epsteinlib/epsteinlib).
@@ -48,6 +48,7 @@ and with optional keyword arguments as
 epsteinzetareg(ν; d, A, x, y)
 ```
 Defaults for `x`, `y`, and `A` are identical to those used in `epsteinzeta`.
+
 ## Anisotropic Epstein zeta function
 
 Let $\nu\in\mathbb C$ and signify by the multi-index $\boldsymbol\alpha\in\mathbb N_0^d$ the anisotropy strength of
@@ -105,6 +106,7 @@ epsteinzetaanisoreg(ν, α; d, A, x, y)
 ```
 
 Defaults for `x`, `y`, and `A` are identical to those used in `epsteinzeta`.
+
 ## Installation and usage
 
 The library can be installed via
