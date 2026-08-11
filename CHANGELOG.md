@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1] - unreleased
+
+### Added
+- Julia wrappers: `epsteinzetaaniso`, `epsteinzetaanisoreg`, supporting optional arguments.
+- Unit tests for the anisotropic variants.
+- Enhanced guards against non-matching dimensions in input values.
+
 ## [0.5.1] - 2026-04-27
 
 ### Changed
@@ -13,5 +20,5 @@
 _First public release_
 
 ### Added
-- Julia wrappers: `epsteinzeta`, `epsteinzetareg` , supporting optional arguments.
+- Julia wrappers: `epsteinzeta`, `epsteinzetareg`, supporting optional arguments.
 - Unit test suite for core functionality.
