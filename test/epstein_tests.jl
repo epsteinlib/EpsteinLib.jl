@@ -179,4 +179,94 @@ end
     # the guard must not reject valid input
     @test epsteinzeta(ν, A3, zeros(3), zeros(3)) isa Complex{Float64}
     @test epsteinzetareg(ν, A3, zeros(3), zeros(3)) isa Complex{Float64}
+
+    # the same guards apply to the anisotropic methods
+    α3 = UInt32[1, 0, 2]
+    @test_throws ArgumentError epsteinzetaaniso(ν, A3, zeros(2), zeros(3), α3)
+    @test_throws ArgumentError epsteinzetaaniso(ν, A3, zeros(3), zeros(4), α3)
+    @test_throws ArgumentError epsteinzetaanisoreg(ν, A3, zeros(2), zeros(3), α3)
+    @test_throws ArgumentError epsteinzetaanisoreg(ν, A3, zeros(3), zeros(4), α3)
+    @test_throws ArgumentError epsteinzetaaniso(ν, Awide, zeros(2), zeros(2), UInt32[1, 0])
+    @test_throws ArgumentError epsteinzetaanisoreg(ν, Atall, zeros(3), zeros(3), α3)
+
+    # α itself must match the dimension
+    @test_throws ArgumentError epsteinzetaaniso(ν, A3, zeros(3), zeros(3), UInt32[1, 0])
+    @test_throws ArgumentError epsteinzetaaniso(
+        ν,
+        A3,
+        zeros(3),
+        zeros(3),
+        UInt32[1, 0, 2, 1],
+    )
+    @test_throws ArgumentError epsteinzetaanisoreg(ν, A3, zeros(3), zeros(3), UInt32[1, 0])
+
+    # the guard must not reject valid input
+    @test epsteinzetaaniso(ν, A3, zeros(3), zeros(3), α3) isa Complex{Float64}
+    @test epsteinzetaanisoreg(ν, A3, zeros(3), zeros(3), α3) isa Complex{Float64}
+end
+
+
+@testset "Matches anisotropic values from reference Mathematica wrapper" begin
+    A_hex = [
+        1 1/2
+        0 sqrt(3)/2
+    ] # hexagonal lattice matrix
+    A_3d = [
+        1 1/3 0
+        0 1 1/4
+        0 0 1
+    ]
+
+    # (ν, A, x, y, α, aniso reference, anisoreg reference, atol)
+    cases = [
+        (
+            1 / 2,
+            A_hex,
+            [1 / 10, 2 / 10],
+            [3 / 10, 4 / 10],
+            UInt32[1, 2],
+            0.07983310242582402 + 0.1423578960983542im,
+            -0.029229875472268955 + 0.0011338524512871971im,
+            0.0,
+        ),
+        (
+            5 / 2,
+            A_3d,
+            [1 / 10, 2 / 10, 3 / 10],
+            [2 / 5, 1 / 5, 3 / 5],
+            UInt32[1, 0, 2],
+            0.010647919006801941 + 0.188941143464776im,
+            -0.18923689964399026 - 0.17797688215910856im,
+            0.0,
+        ),
+        (
+            1 / 2,
+            A_hex,
+            [1 / 10, 2 / 10],
+            [3 / 10, 4 / 10],
+            UInt32[4, 1],
+            0.10323147765611702 + 0.16604413648941896im,
+            -0.026299295350110257 + 0.0072935367074584145im,
+            0.0,
+        ),
+        # α_1 odd with x_1 = y_1 = 0: both vanish. Mathematica returns roundoff
+        # at 1e-19 for the regularized case, so compare against exact zero with
+        # an absolute tolerance instead.
+        (
+            1 / 2,
+            A_hex,
+            [0.0, 2 / 10],
+            [0.0, 4 / 10],
+            UInt32[1, 2],
+            0.0 + 0.0im,
+            0.0 + 0.0im,
+            1e-14,
+        ),
+    ]
+
+    @testset "ν=$ν, α=$(Int.(α))" for (ν, A, x, y, α, ref, refreg, tol) in cases
+        @testset "$f" for (f, r) in ((epsteinzetaaniso, ref), (epsteinzetaanisoreg, refreg))
+            @test f(ν, A, x, y, α) ≈ r rtol = 1e-14 atol = tol
+        end
+    end
 end
