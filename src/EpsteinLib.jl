@@ -24,31 +24,20 @@ function checkdimensions(A::Matrix{Float64}, x::Vector{Float64}, y::Vector{Float
     return UInt32(d)
 end
 
-"""
-    epsteinzeta(ν::Float64,A::Matrix{Float64},x::Vector{Float64},y::Vector{Float64})
-Calls the C function `epsteinZeta` from the shared library.
-    double complex epsteinZeta(double nu, unsigned int dim, const double *A, const double *x, const double *y);
-Approximates
-``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \\frac{e^{-2\\pi i y \\cdot z}}{|x-z|^\\nu}``
-if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
-"""
-function epsteinzeta(
-    ν::Float64,
-    A::Matrix{Float64},
-    x::Vector{Float64},
-    y::Vector{Float64},
-)::Complex{Float64}
-    dim = checkdimensions(A, x, y)
-    A_flat = vec(permutedims(A))
-    return @ccall libepstein.epsteinZeta(
-        ν::Float64,
-        dim::UInt32,
-        A_flat::Ref{Float64},
-        x::Ref{Float64},
-        y::Ref{Float64},
-    )::Complex{Float64}
-end
 
+"""
+    cleanuparguments(d, ν, A, x, y)
+Resolves the optional arguments of the keyword methods into the concrete types
+expected by the low-level methods. Any of `d`, `A`, `x`, `y` may be `nothing`.
+
+The dimension is taken from `d` if given, otherwise from `x`, `y` or `A`, in
+that order. Missing vectors default to zero and a missing `A` to the identity
+matrix, both of size `d`. Everything else is converted to `Float64` and checked
+for consistent sizes.
+
+Returns `(ν, A, x, y)`. Throws an `ArgumentError` if all of `d`, `A`, `x`, `y`
+are `nothing`, or if the given sizes disagree.
+"""
 function cleanuparguments(d, ν, A, x, y)
     ν = convert(Float64, ν)
     if x === nothing && y === nothing && d === nothing && A === nothing
@@ -96,6 +85,34 @@ function cleanuparguments(d, ν, A, x, y)
 
     return (ν, A, x, y)
 end
+
+
+"""
+    epsteinzeta(ν::Float64,A::Matrix{Float64},x::Vector{Float64},y::Vector{Float64})
+Calls the C function `epsteinZeta` from the shared library.
+    double complex epsteinZeta(double nu, unsigned int dim, const double *A, const double *x, const double *y);
+Approximates
+``Z_{\\nu, A}(x, y) = \\sum_{z \\in A \\mathbb{Z}^d, z \\ne x} \\frac{e^{-2\\pi i y \\cdot z}}{|x-z|^\\nu}``
+if the real part of nu is greater than the system dimension, and the meromorphic continuation otherwise.
+"""
+function epsteinzeta(
+    ν::Float64,
+    A::Matrix{Float64},
+    x::Vector{Float64},
+    y::Vector{Float64},
+)::Complex{Float64}
+    dim = checkdimensions(A, x, y)
+    A_flat = vec(permutedims(A))
+    return @ccall libepstein.epsteinZeta(
+        ν::Float64,
+        dim::UInt32,
+        A_flat::Ref{Float64},
+        x::Ref{Float64},
+        y::Ref{Float64},
+    )::Complex{Float64}
+end
+
+
 
 """
 
