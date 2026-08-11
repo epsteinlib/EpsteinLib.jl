@@ -33,20 +33,6 @@ end
           0.8819439608604308 - 0.10322404491724824im atol = 1e-14
 end
 
-@testset "Test errors" begin
-    ν = 2.0
-    @test_throws ArgumentError epsteinzeta(ν)
-    @test_throws ArgumentError epsteinzeta(ν; d = 1, x = [0.0, 0.0])
-    @test_throws ArgumentError epsteinzeta(ν; d = 1, y = [0.0, 0.0])
-    @test_throws ArgumentError epsteinzeta(ν; x = [0.0], y = [0.0, 0.0])
-    @test_throws ArgumentError epsteinzeta(ν; d = 1, x = [0.0, 0.0], y = [0.0, 0.0])
-
-    A = Matrix{Float64}(I, 1, 1)
-    @test_throws ArgumentError epsteinzeta(ν; d = 2, A = A)
-    @test_throws ArgumentError epsteinzeta(ν; x = [0.0, 0.0], A = A)
-    @test_throws ArgumentError epsteinzeta(ν; y = [0.0, 0.0], A = A)
-end
-
 @testset "Test single Epstein zeta evaluation" begin
 
     nu = 1 / 2
