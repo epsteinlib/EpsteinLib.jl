@@ -256,3 +256,28 @@ end
         end
     end
 end
+
+@testset "Anisotropic structure" begin
+    d = 3
+    A = Matrix{Float64}(I, d, d)
+    x = zeros(d)
+    y = fill(0.5, d)
+    ν = 4.0
+    zeroα = zeros(UInt32, d)
+
+    # α = 0 must reproduce the isotropic functions exactly
+    @test epsteinzetaaniso(ν, A, x, y, zeroα) == epsteinzeta(ν, A, x, y)
+    @test epsteinzetaanisoreg(ν, A, x, y, zeroα) == epsteinzetareg(ν, A, x, y)
+
+    # keyword form agrees with the positional form
+    @test epsteinzetaaniso(ν, [0, 1, 0]; x = x, y = y, A = A) ==
+          epsteinzetaaniso(ν, A, x, y, UInt32[0, 1, 0])
+
+    # dimension inferred from α alone
+    @test epsteinzetaaniso(ν, [0, 1, 0]) isa Complex{Float64}
+
+    # integer input is accepted
+    @test epsteinzetaaniso(4, [0, 1, 0]; x = [0, 0, 0], y = [1, 1, 1]) isa Complex{Float64}
+
+    @test_throws ArgumentError epsteinzetaaniso(ν, [0, -1, 0]; A = A)
+end
