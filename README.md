@@ -16,6 +16,7 @@ $$
 Z_{\Lambda,\nu}(\boldsymbol x,\boldsymbol y)
 = \sum_{z \in \Lambda}{}^{'} \frac{e^{-2\pi i \boldsymbol y \cdot \boldsymbol z}}{\left| \boldsymbol x- \boldsymbol z\right|^\nu},\quad \mathrm{Re}(\nu)>d,
 $$
+which can be meromorphically continued to $\nu \in \mathbb C$. Here, the primed sum excludes the case $\boldsymbol z = \boldsymbol x.$
 
 The Epstein zeta function is implemented as
 ```julia
@@ -61,7 +62,7 @@ $$
 with $\boldsymbol z^{\boldsymbol\alpha}=z_1^{\alpha_1}z_2^{\alpha_2}\ldots z_d^{\alpha_d}$. For a $d$-dimensional lattice $\Lambda$ and $\boldsymbol x,\boldsymbol y \in \mathbb R^d$, the anisotropic Epstein zeta function is then define as
 
 $$
-Z_{\Lambda,\nu}(\boldsymbol x,\boldsymbol y)
+Z_{\Lambda,\nu,\boldsymbol \alpha}(\boldsymbol x,\boldsymbol y)
 = \sum_{z \in \Lambda}{}^{'} e^{-2\pi i \boldsymbol y \cdot \boldsymbol z}V_{\nu,\boldsymbol \alpha}(\boldsymbol z-\boldsymbol x),\quad \mathrm{Re}(\nu)>d
 +|\boldsymbol \alpha|,
 $$
