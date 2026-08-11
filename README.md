@@ -47,7 +47,63 @@ and with optional keyword arguments as
 epsteinzetareg(ν; d, A, x, y)
 ```
 Defaults for `x`, `y`, and `A` are identical to those used in `epsteinzeta`.
+## Anisotropic Epstein zeta function
 
+Let $\nu\in\mathbb C$ and signify by the multi-index $\boldsymbol\alpha\in\mathbb N_0^d$ the anisotropy strength of
+
+$$
+V_{\nu,\boldsymbol \alpha}(\boldsymbol z)
+= \frac{\boldsymbol z^{\boldsymbol \alpha}}{\vert \boldsymbol z \vert^\nu}
+,\qquad
+\boldsymbol z\in\mathbb R^d\setminus\{\boldsymbol 0\},
+$$
+
+with $\boldsymbol z^{\boldsymbol\alpha}=z_1^{\alpha_1}z_2^{\alpha_2}\ldots z_d^{\alpha_d}$. For a $d$-dimensional lattice $\Lambda$ and $\boldsymbol x,\boldsymbol y \in \mathbb R^d$, the anisotropic Epstein zeta function is then define as
+
+$$
+Z_{\Lambda,\nu}(\boldsymbol x,\boldsymbol y)
+= \sum_{z \in \Lambda}{}^{'} e^{-2\pi i \boldsymbol y \cdot \boldsymbol z}V_{\nu,\boldsymbol \alpha}(\boldsymbol z-\boldsymbol x),\quad \mathrm{Re}(\nu)>d
++|\boldsymbol \alpha|,
+$$
+
+meromorphically continued to $\nu \in \mathbb C$; where we define $|\boldsymbol{\alpha}|=\alpha_1+\ldots+\alpha_d$.  Here, we recover the Epstein zeta function for $\boldsymbol \alpha=\boldsymbol 0$. 
+
+The anisotropic Epstein zeta function is implemented as
+
+```julia
+epsteinzetaaniso(ν::Float64, A::Matrix{Float64}, x::Vector{Float64}, y::Vector{Float64}, α::Vector{UInt32})::Complex{Float64}
+```
+
+and with optional keyword arguments as
+
+```julia
+epsteinzetaaniso(ν, α; d, A, x, y)
+```
+
+where `α` determines the dimension if none of `d`, `x`, `y`, or `A` is provided. Defaults for `x`, `y`, and `A` are identical to those used in `epsteinzeta`.
+
+In addition, the library includes the regularized anisotropic Epstein zeta function defined via
+
+$$
+Z_{\Lambda, \nu,\boldsymbol\alpha}^{(\mathrm{reg})}(\boldsymbol x,\boldsymbol y) = e^{2\pi i \boldsymbol{x}\cdot\boldsymbol{y}}Z_{\Lambda,\nu,\boldsymbol\alpha}(\boldsymbol x,\boldsymbol y) -\frac{\hat s^{(\boldsymbol\alpha)}_{\nu}(\boldsymbol y)}{(-2\pi i)^{|\boldsymbol\alpha|}V_{\Lambda}}
+,\qquad \boldsymbol y\neq \boldsymbol 0,
+$$
+
+and continuously extended to $\boldsymbol y=\boldsymbol 0$, where $`\hat s^{(\boldsymbol\alpha)}_\nu`$ denotes the $\boldsymbol\alpha$-derivative of $\hat{s}_\nu$.
+
+The regularized anisotropic Epstein zeta function is implemented as
+
+```julia
+epsteinzetaanisoreg(ν::Float64, A::Matrix{Float64}, x::Vector{Float64}, y::Vector{Float64}, α::Vector{UInt32})::Complex{Float64}
+```
+
+and with optional keyword arguments as
+
+```julia
+epsteinzetaanisoreg(ν, α; d, A, x, y)
+```
+
+Defaults for `x`, `y`, and `A` are identical to those used in `epsteinzeta`.
 ## Installation and usage
 
 The library can be installed via
