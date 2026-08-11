@@ -13,11 +13,9 @@ Precompiled binaries are available through [Epsteinlib_jll](https://github.com/J
 For a $d$-dimensional lattice $\Lambda=A\mathbb Z^d$, with $A\in \mathbb R^{d\times d}$ regular, $\boldsymbol x,\boldsymbol y \in \mathbb R^d$, and $\nu \in \mathbb C$, the Epstein zeta function is defined by the Dirichlet series
 
 $$
-Z_{\Lambda,\nu}\begin{vmatrix} \boldsymbol x \newline\boldsymbol y \end{vmatrix}
+Z_{\Lambda,\nu}(\boldsymbol x,\boldsymbol y)
 = \sum_{z \in \Lambda}{}^{'} \frac{e^{-2\pi i \boldsymbol y \cdot \boldsymbol z}}{\left| \boldsymbol x- \boldsymbol z\right|^\nu},\quad \mathrm{Re}(\nu)>d,
 $$
-
-which can be meromorphically continued to $\nu \in \mathbb C$. Here, the primed sum excludes the case $\boldsymbol z = \boldsymbol x.$
 
 The Epstein zeta function is implemented as
 ```julia
@@ -29,13 +27,13 @@ epsteinzeta(ν; d, A, x, y)
 ```
 where at least one of the arguments `d`, `x`, `y`, or `A` must be provided. By default, `x` and `y` are zero vectors of length `d`, and `A` is the `d × d` identity matrix.
 
-In addition, this wrapper includes the regularized Epstein zeta function, which is analytic around $\boldsymbol y=0$, and is defined via
+In addition, this library includes the regularized Epstein zeta function, which is analytic around $\boldsymbol y= \boldsymbol 0$, and is defined via
 
 $$
-Z_{\Lambda,\nu}^{\mathrm{reg}}\begin{vmatrix} \boldsymbol x \newline\boldsymbol y \end{vmatrix} =
+Z_{\Lambda,\nu}^{\mathrm{reg}}(\boldsymbol x,\boldsymbol y) =
 e^{2\pi i \boldsymbol x\cdot\boldsymbol y}
-Z_{\Lambda,\nu}\left|\begin{aligned} \boldsymbol x \newline\boldsymbol y \end{aligned}\right|
--\frac{\hat{s}_{\nu}(\boldsymbol y)}{V_{\Lambda}},
+Z_{\Lambda,\nu}(\boldsymbol x,\boldsymbol y )
+-\frac{\hat{s}(\boldsymbol y)}{V_{\Lambda}},
 $$
 
 where $V_{\Lambda}=|\det A|$ is the volume of the elementary lattice cell, and the Fourier transform of the singularity $s_{\nu}=|\boldsymbol{\cdot}|^{-\nu}$ is defined as in [epsteinlib](https://github.com/epsteinlib/epsteinlib).
