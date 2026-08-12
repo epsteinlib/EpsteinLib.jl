@@ -71,8 +71,8 @@ sum_vertices(ν, N) = sum(truncated_power(ν, sqrt(x^2 + y^2)) for x = (-N):N, y
 @testset "Matches sum at d=2" begin
     d = 2
     N = 1_000
-    for ν = 3.0:1.0:5.0
-        @test epsteinzeta(ν; d = d) ≈ sum_vertices(ν, N) atol = 1e-2
+    for ν = 7.0:1.0:10.0
+        @test epsteinzeta(ν; d = d) ≈ sum_vertices(ν, N) atol = 1e-10
     end
 end
 
@@ -137,24 +137,30 @@ end
     @test_throws ArgumentError epsteinzeta(ν; d = 2, A = A)
     @test_throws ArgumentError epsteinzeta(ν; x = [0.0, 0.0], A = A)
     @test_throws ArgumentError epsteinzeta(ν; y = [0.0, 0.0], A = A)
+
+    # non-positive dimensions
+    @test_throws ArgumentError epsteinzeta(ν; d = 0)
+    @test_throws ArgumentError epsteinzeta(ν; d = -1)
+    @test_throws ArgumentError epsteinzeta(ν; x = Float64[])
+    @test_throws ArgumentError epsteinzetaaniso(ν, UInt32[])
 end
 
 @testset "Low-level methods validate dimensions" begin
     ν = 2.0
     A3 = Matrix{Float64}(I, 3, 3)
 
-    # x or y shorter than dim — C would read past the end of the array
+    # x or y shorter than dim
     @test_throws ArgumentError epsteinzeta(ν, A3, zeros(2), zeros(3))
     @test_throws ArgumentError epsteinzeta(ν, A3, zeros(3), zeros(2))
     @test_throws ArgumentError epsteinzetareg(ν, A3, zeros(2), zeros(3))
     @test_throws ArgumentError epsteinzetareg(ν, A3, zeros(3), zeros(2))
 
-    # x or y longer than dim — trailing entries silently ignored
+    # x or y longer than dim
     @test_throws ArgumentError epsteinzeta(ν, A3, zeros(4), zeros(3))
     @test_throws ArgumentError epsteinzeta(ν, A3, zeros(3), zeros(4))
     @test_throws ArgumentError epsteinzetareg(ν, A3, zeros(4), zeros(3))
 
-    # non-square A — flattening produces a silently wrong matrix
+    # non-square A so that
     Awide = Matrix{Float64}(I, 2, 3)
     Atall = Matrix{Float64}(I, 3, 2)
     @test_throws ArgumentError epsteinzeta(ν, Awide, zeros(2), zeros(2))
@@ -162,11 +168,11 @@ end
     @test_throws ArgumentError epsteinzetareg(ν, Awide, zeros(2), zeros(2))
     @test_throws ArgumentError epsteinzetareg(ν, Atall, zeros(3), zeros(3))
 
-    # the guard must not reject valid input
+    # valid input
     @test epsteinzeta(ν, A3, zeros(3), zeros(3)) isa Complex{Float64}
     @test epsteinzetareg(ν, A3, zeros(3), zeros(3)) isa Complex{Float64}
 
-    # the same guards apply to the anisotropic methods
+    # repeate for the anisotropic variant
     α3 = UInt32[1, 0, 2]
     @test_throws ArgumentError epsteinzetaaniso(ν, A3, zeros(2), zeros(3), α3)
     @test_throws ArgumentError epsteinzetaaniso(ν, A3, zeros(3), zeros(4), α3)
@@ -175,7 +181,7 @@ end
     @test_throws ArgumentError epsteinzetaaniso(ν, Awide, zeros(2), zeros(2), UInt32[1, 0])
     @test_throws ArgumentError epsteinzetaanisoreg(ν, Atall, zeros(3), zeros(3), α3)
 
-    # α itself must match the dimension
+    # α mismatch
     @test_throws ArgumentError epsteinzetaaniso(ν, A3, zeros(3), zeros(3), UInt32[1, 0])
     @test_throws ArgumentError epsteinzetaaniso(
         ν,
@@ -186,9 +192,14 @@ end
     )
     @test_throws ArgumentError epsteinzetaanisoreg(ν, A3, zeros(3), zeros(3), UInt32[1, 0])
 
-    # the guard must not reject valid input
+    # valid input
     @test epsteinzetaaniso(ν, A3, zeros(3), zeros(3), α3) isa Complex{Float64}
     @test epsteinzetaanisoreg(ν, A3, zeros(3), zeros(3), α3) isa Complex{Float64}
+
+    # zero-dimensional input must not reach C
+    A0 = Matrix{Float64}(undef, 0, 0)
+    @test_throws ArgumentError epsteinzeta(ν, A0, Float64[], Float64[])
+    @test_throws ArgumentError epsteinzetaaniso(ν, A0, Float64[], Float64[], UInt32[])
 end
 
 
@@ -235,9 +246,6 @@ end
             -0.026299295350110257 + 0.0072935367074584145im,
             0.0,
         ),
-        # α_1 odd with x_1 = y_1 = 0: both vanish. Mathematica returns roundoff
-        # at 1e-19 for the regularized case, so compare against exact zero with
-        # an absolute tolerance instead.
         (
             1 / 2,
             A_hex,
