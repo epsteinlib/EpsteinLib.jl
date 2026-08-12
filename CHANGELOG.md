@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.6.1] - 2026-08-12
+
+### Added
+- Julia wrappers: `epsteinzetaaniso`, `epsteinzetaanisoreg`, supporting optional arguments. Requires `Epsteinlib_jll` 0.6.1 or later.
+- Unit tests for the anisotropic variants against reference values from the Mathematica bindings.
+
+### Fixed
+- The low-level methods now verify that `A` is square and that `x`, `y` and `α` match its dimension. Previously a non-square `A` produced silently wrong results and a short vector could read past the end of the array.
+- Corrected LaTeX escaping in the `epsteinzeta` docstrings.
+- Zero dimensional input is now rejected which previously caused a hang in the C library.
+
 ## [0.5.1] - 2026-04-27
 
 ### Changed
@@ -13,5 +24,5 @@
 _First public release_
 
 ### Added
-- Julia wrappers: `epsteinzeta`, `epsteinzetareg` , supporting optional arguments.
+- Julia wrappers: `epsteinzeta`, `epsteinzetareg`, supporting optional arguments.
 - Unit test suite for core functionality.
