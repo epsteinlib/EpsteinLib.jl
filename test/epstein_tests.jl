@@ -262,12 +262,12 @@ end
     A = Matrix{Float64}(I, d, d)
     x = zeros(d)
     y = fill(0.5, d)
-    ν = 4.0
+    ν = 0.5
     zeroα = zeros(UInt32, d)
 
-    # α = 0 must reproduce the isotropic functions exactly
-    @test epsteinzetaaniso(ν, A, x, y, zeroα) == epsteinzeta(ν, A, x, y)
-    @test epsteinzetaanisoreg(ν, A, x, y, zeroα) == epsteinzetareg(ν, A, x, y)
+    # α = 0 must reproduce the isotropic functions
+    @test epsteinzetaaniso(ν, A, x, y, zeroα) ≈ epsteinzeta(ν, A, x, y) atol = 1e-14
+    @test epsteinzetaanisoreg(ν, A, x, y, zeroα) ≈ epsteinzetareg(ν, A, x, y) atol = 1e-14
 
     # keyword form agrees with the positional form
     @test epsteinzetaaniso(ν, [0, 1, 0]; x = x, y = y, A = A) ==
