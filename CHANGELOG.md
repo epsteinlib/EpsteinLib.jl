@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.6.1] - 2026-08-11
+## [0.6.1] - 2026-08-12
 
 ### Added
 - Julia wrappers: `epsteinzetaaniso`, `epsteinzetaanisoreg`, supporting optional arguments. Requires `Epsteinlib_jll` 0.6.1 or later.
