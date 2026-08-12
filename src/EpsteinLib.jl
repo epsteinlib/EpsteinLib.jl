@@ -106,19 +106,6 @@ end
 
 
 """
-    checkalpha(dim::UInt32, α::Vector{UInt32})
-Verifies that the multi-index `α` matches the system dimension. Guards the
-low-level anisotropic methods, which pass `α` to C as a raw pointer.
-"""
-function checkalpha(dim::UInt32, α::Vector{UInt32})
-    if length(α) != dim
-        throw(ArgumentError("Incompatible size of α"))
-    end
-    return nothing
-end
-
-
-"""
     epsteinzeta(ν::Float64,A::Matrix{Float64},x::Vector{Float64},y::Vector{Float64})
 Calls the C function `epsteinZeta` from the shared library.
     double complex epsteinZeta(double nu, unsigned int dim, const double *A, const double *x, const double *y);
@@ -226,7 +213,9 @@ function epsteinzetaaniso(
     α::Vector{UInt32},
 )::Complex{Float64}
     dim = checkdimensions(A, x, y)
-    checkalpha(dim, α)
+    if length(α) != dim
+        throw(ArgumentError("Incompatible size of α"))
+    end
     A_flat = vec(permutedims(A))
     return @ccall libepstein.epsteinZetaAniso(
         ν::Float64,
@@ -283,7 +272,9 @@ function epsteinzetaanisoreg(
     α::Vector{UInt32},
 )::Complex{Float64}
     dim = checkdimensions(A, x, y)
-    checkalpha(dim, α)
+    if length(α) != dim
+        throw(ArgumentError("Incompatible size of α"))
+    end
     A_flat = vec(permutedims(A))
     return @ccall libepstein.epsteinZetaAnisoReg(
         ν::Float64,
