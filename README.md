@@ -16,6 +16,7 @@ $$
 Z_{\Lambda,\nu}(\boldsymbol x,\boldsymbol y)
 = \sum_{z \in \Lambda}{}^{'} \frac{e^{-2\pi i \boldsymbol y \cdot \boldsymbol z}}{\left| \boldsymbol x- \boldsymbol z\right|^\nu},\quad \mathrm{Re}(\nu)>d,
 $$
+
 which can be meromorphically continued to $\nu \in \mathbb C$. Here, the primed sum excludes the case $\boldsymbol z = \boldsymbol x.$
 
 The Epstein zeta function is implemented as
