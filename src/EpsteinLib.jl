@@ -12,6 +12,9 @@ low-level methods, which pass raw pointers to C without any further checks.
 """
 function checkdimensions(A::Matrix{Float64}, x::Vector{Float64}, y::Vector{Float64})
     d = size(A, 1)
+    if d < 1
+        throw(ArgumentError("A must have positive dimension"))
+    end
     if size(A, 2) != d
         throw(ArgumentError("A must be square"))
     end
@@ -55,6 +58,9 @@ function cleanuparguments(d, ν, A, x, y)
         end
     end
     d = convert(Int64, d)
+    if d < 1
+        throw(ArgumentError("d must be positive"))
+    end
 
     if x === nothing
         x = zeros(d)
