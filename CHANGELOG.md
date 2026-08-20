@@ -1,6 +1,9 @@
 # Changelog
 
-## [0.6.2] - unreleased
+## [0.6.2] - 2026-08-20
+
+### Changed
+- Updated `Epsteinlib_jll` to `v0.6.2` which fixes silently wrong return values in the regularized and anisotropic Epstein zeta functions, see the [epsteinlib changelog](https://github.com/epsteinlib/epsteinlib/blob/main/CHANGELOG.md) for details.
 
 ## [0.6.1] - 2026-08-12
 
@@ -11,7 +14,7 @@
 ### Fixed
 - The low-level methods now verify that `A` is square and that `x`, `y` and `α` match its dimension. Previously a non-square `A` produced silently wrong results and a short vector could read past the end of the array.
 - Corrected LaTeX escaping in the `epsteinzeta` docstrings.
-- Zero dimensional input is now rejected which previously caused a hang in the C library.
+- Zero-dimensional input is now rejected which previously caused a hang in the C library.
 
 ## [0.5.1] - 2026-04-27
 
