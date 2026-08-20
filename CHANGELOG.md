@@ -1,6 +1,9 @@
 # Changelog
 
-## [0.6.2] - unreleased
+## [0.6.2] - 2026-08-20
+
+### Changed
+- Updated `Epsteinlib_jll` to `v0.6.2` which fixes silently wrong return values in the regularized and anisotropic Epstein zeta functions, see the [epsteinlib changelog](https://github.com/epsteinlib/epsteinlib/blob/main/CHANGELOG.md) for details.
 
 ## [0.6.1] - 2026-08-12
 
